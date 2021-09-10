@@ -2,13 +2,17 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
+import connectDB from './config/database';
 import notFound from './middleware/notFound';
 import error from './middleware/error';
+import config from './config/config';
+
+connectDB();
 
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: config.cors.origin }));
 
 app.use(notFound);
 app.use(error);
