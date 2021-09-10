@@ -5,8 +5,13 @@ import Log from '../models/log';
 import LogType from '../interfaces/log';
 import errorFormatter from '../config/errorFormatter';
 
-export const getLogs: RequestHandler = (req, res) => {
-  return res.json({ logs: '🌍' });
+export const getLogs: RequestHandler = async (_req, res, next) => {
+  try {
+    const logs = await Log.find();
+    return res.json({ logs });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const newLogEntry: RequestHandler = async (req, res, next) => {
